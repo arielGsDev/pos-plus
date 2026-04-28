@@ -1,4 +1,4 @@
-package com.soft.pos_plus.infrastructure.persistence.sqlserver;
+package com.soft.pos_plus.infrastructure.persistence.mapper;
 
 import org.springframework.stereotype.Component;
 
@@ -6,7 +6,7 @@ import com.soft.pos_plus.domain.entities.Product;
 import com.soft.pos_plus.infrastructure.entities.ProductEntity;
 
 @Component
-public class ProductMapper {
+public class ProductInfraMapper {
 
     public ProductEntity toEntity(Product product) {
         ProductEntity entity = new ProductEntity();

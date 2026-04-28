@@ -1,22 +1,24 @@
-package com.soft.pos_plus.infrastructure.persistence.sqlserver;
+package com.soft.pos_plus.infrastructure.persistence.sqlserver.product;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import com.soft.pos_plus.domain.entities.Product;
 import com.soft.pos_plus.domain.repositories.ProductRepository;
 import com.soft.pos_plus.infrastructure.entities.ProductEntity;
+import com.soft.pos_plus.infrastructure.persistence.mapper.ProductInfraMapper;
+
+import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
 public class ProductRepositoryImpl implements ProductRepository {
 
     private final ProductJpaRepository jpaRepository;
-    private final ProductMapper mapper;
+    private final ProductInfraMapper mapper;
 
     @Override
     public Product save(Product product) {

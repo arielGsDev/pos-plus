@@ -1,4 +1,4 @@
-package com.soft.pos_plus.infrastructure.persistence.sqlserver;
+package com.soft.pos_plus.infrastructure.persistence.sqlserver.product;
 
 import java.util.UUID;
 
