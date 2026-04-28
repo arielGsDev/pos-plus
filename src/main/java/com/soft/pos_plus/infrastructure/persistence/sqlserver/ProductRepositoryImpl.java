@@ -1,29 +1,27 @@
 package com.soft.pos_plus.infrastructure.persistence.sqlserver;
 
-import com.soft.pos_plus.domain.entities.Product;
-import com.soft.pos_plus.domain.repositories.ProductRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import com.soft.pos_plus.domain.entities.Product;
+import com.soft.pos_plus.domain.repositories.ProductRepository;
+import com.soft.pos_plus.infrastructure.entities.ProductEntity;
+
 @Repository
-public class SqlServerProductRepository implements ProductRepository {
+@RequiredArgsConstructor
+public class ProductRepositoryImpl implements ProductRepository {
 
-    private final SpringDataSqlServerProductJpaRepository jpaRepository;
-    private final SqlServerProductMapper mapper;
-
-    public SqlServerProductRepository(
-            SpringDataSqlServerProductJpaRepository jpaRepository,
-            SqlServerProductMapper mapper) {
-        this.jpaRepository = jpaRepository;
-        this.mapper = mapper;
-    }
+    private final ProductJpaRepository jpaRepository;
+    private final ProductMapper mapper;
 
     @Override
     public Product save(Product product) {
-        SqlServerProductEntity entity = mapper.toEntity(product);
-        SqlServerProductEntity saved = jpaRepository.save(entity);
+        ProductEntity entity = mapper.toEntity(product);
+        ProductEntity saved = jpaRepository.save(entity);
         return mapper.toDomain(saved);
     }
 
@@ -39,8 +37,8 @@ public class SqlServerProductRepository implements ProductRepository {
 
     @Override
     public Product update(Product product) {
-        SqlServerProductEntity entity = mapper.toEntity(product);
-        SqlServerProductEntity saved = jpaRepository.save(entity);
+        ProductEntity entity = mapper.toEntity(product);
+        ProductEntity saved = jpaRepository.save(entity);
         return mapper.toDomain(saved);
     }
 

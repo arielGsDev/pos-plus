@@ -9,22 +9,21 @@ import com.soft.pos_plus.application.exception.NotFoundException;
 import com.soft.pos_plus.application.mappers.ProductApplicationMapper;
 import com.soft.pos_plus.domain.entities.Product;
 import com.soft.pos_plus.domain.repositories.ProductRepository;
+import com.soft.pos_plus.domain.services.IProductService;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProductService {
+@RequiredArgsConstructor
+public class ProductService implements IProductService {
 
     private final ProductRepository productRepository;
     private final ProductApplicationMapper productApplicationMapper;
 
-    public ProductService(ProductRepository productRepository, ProductApplicationMapper productApplicationMapper) {
-        this.productRepository = productRepository;
-        this.productApplicationMapper = productApplicationMapper;
-    }
-
+    @Override
     public ProductResponse create(CreateProductRequest request) {
         validateRequiredFields(request.getName(), request.getSku(), request.getPrice(), request.getStock());
         validatePriceAndStock(request.getPrice(), request.getStock());
@@ -37,12 +36,14 @@ public class ProductService {
         return productApplicationMapper.toResponse(savedProduct);
     }
 
+    @Override
     public ProductResponse findById(UUID id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found with id: " + id));
         return productApplicationMapper.toResponse(product);
     }
 
+    @Override
     public List<ProductResponse> findAll() {
         return productRepository.findAll()
                 .stream()
@@ -50,6 +51,7 @@ public class ProductService {
                 .toList();
     }
 
+    @Override
     public ProductResponse update(UUID id, UpdateProductRequest request) {
         Product currentProduct = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Product not found with id: " + id));
@@ -66,6 +68,7 @@ public class ProductService {
         return productApplicationMapper.toResponse(updatedProduct);
     }
 
+    @Override
     public void delete(UUID id) {
         if (!productRepository.existsById(id)) {
             throw new NotFoundException("Product not found with id: " + id);
